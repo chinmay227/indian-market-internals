@@ -2,6 +2,13 @@
   "locked_before_external_validation": true,
   "discovery_source": "Phase 8.1 on original 100-stock research universe",
   "status": "candidate relationship; not independently validated",
+  "validation_type": "cross-sectional holdout using stocks excluded from the discovery sample; same historical market period",
+  "parent_universe": "same frozen current-Nifty-500 sector-universe snapshot used by discovery pipeline",
+  "validation_universe_rule": "use the complete 400-stock complement after excluding all 100 discovery stocks; do not draw or optimize a second random sample",
+  "validation_universe_size": 400,
+  "discovery_validation_stock_overlap": 0,
+  "stratification_note": "the original discovery sample contains exactly 20 stocks from each of five 100-rank market-cap strata, so the untouched complement contains the remaining 80 stocks from each original stratum",
+  "history_last_date": "2026-08-21",
   "episode_definition": "consecutive valid sessions with rel_nifty_20d < 0 and rel_sector_20d < 0",
   "landmark_day": 20,
   "sample_rule": "same-stock episode-start anchors spaced by more than 60 market sessions",
@@ -10,18 +17,29 @@
   "primary_outcome": "future_rel_sector_40d",
   "primary_horizon_sessions": 40,
   "expected_direction": "negative",
+  "minimum_primary_observations": 200,
+  "bootstrap_repetitions": 2000,
+  "bootstrap_seed": 20260824,
+  "bootstrap_cluster_units": [
+    "ticker",
+    "calendar_quarter",
+    "sector"
+  ],
+  "locked_success_rule": "at least 200 valid independent Day-20 observations, primary Spearman rho < 0, and the 95% cluster-bootstrap upper bound is < 0 for ticker, calendar-quarter, and sector clustering",
   "secondary_outcomes": [
     "future_rel_sector_60d",
     "future_rel_nifty_40d",
     "future_stock_40d"
   ],
+  "secondary_outcomes_cannot_rescue_primary_failure": true,
   "comparison_landmarks": [5, 10],
   "no_reoptimization_rules": [
     "do not change Day 20 after viewing external-validation returns",
     "do not replace 40D sector-relative return as the primary outcome",
     "do not choose a rebound threshold using validation outcomes",
     "do not alter the episode definition to improve validation results",
+    "do not redraw or selectively subset the 400-stock validation complement based on outcomes",
     "report null or opposite results unchanged"
   ],
-  "recommended_external_validation": "construct a new stock sample from current Nifty 500 members not used in the original 100-stock discovery universe, preserving the original market-cap-stratified and sector-balanced sampling philosophy"
+  "interpretation_warning": "a pass supports cross-sectional generalization to previously unused stocks but is not future-time out-of-sample evidence and does not establish tradability"
 }
