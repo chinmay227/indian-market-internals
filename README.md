@@ -104,6 +104,11 @@ Internal robustness checks are supportive: the relationship remains negative whe
 
 **This is not yet an independently validated signal.** The candidate was discovered on the same dataset used for the robustness analysis. The next step is a locked external validation on stocks that were not part of the original discovery universe.
 
+Detailed evidence is in:
+
+- `reports/phase_9_internal_robustness.md`
+- `reports/phase_9_locked_external_validation_spec.json`
+
 ## Why the project includes null and rejected results
 
 A core objective is to distinguish real structure from patterns created by:
@@ -117,21 +122,24 @@ A core objective is to distinguish real structure from patterns created by:
 
 A result that disappears after these checks is treated as a research result, not hidden.
 
-## Notebook sequence
+## Research notebook sequence
+
+The working research sequence is:
 
 ```text
-notebooks/
-├── 01_download_prices.ipynb
-├── 02_calculate_relative_returns.ipynb
-├── 03_expand_universe_and_breadth.ipynb
-├── 04_build_research_universe.ipynb
-├── 05_build_relative_returns.ipynb
-├── 06_build_persistence_features.ipynb
-├── 07_classify_weakness_and_test_forward_outcomes.ipynb
-├── 08_build_weakness_episodes_and_paths.ipynb
-├── 09_test_prospective_rebound_landmarks.ipynb
-└── 10_internal_robustness_and_lock_validation.ipynb
+01_download_prices.ipynb
+02_calculate_relative_returns.ipynb
+03_expand_universe_and_breadth.ipynb
+04_build_research_universe.ipynb
+05_build_relative_returns.ipynb
+06_build_persistence_features.ipynb
+07_classify_weakness_and_test_forward_outcomes.ipynb
+08_build_weakness_episodes_and_paths.ipynb
+09_test_prospective_rebound_landmarks.ipynb
+10_internal_robustness_and_lock_validation.ipynb
 ```
+
+Notebooks 01–05 are currently committed under `notebooks/`. The later research notebooks have been validated in the working Colab workflow; their compact validated findings are being committed separately while the larger notebook artifacts are promoted into the repository through a safe file-upload path rather than risking partial JSON writes.
 
 ## Research progression
 
