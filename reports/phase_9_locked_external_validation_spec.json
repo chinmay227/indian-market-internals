@@ -1,0 +1,27 @@
+{
+  "locked_before_external_validation": true,
+  "discovery_source": "Phase 8.1 on original 100-stock research universe",
+  "status": "candidate relationship; not independently validated",
+  "episode_definition": "consecutive valid sessions with rel_nifty_20d < 0 and rel_sector_20d < 0",
+  "landmark_day": 20,
+  "sample_rule": "same-stock episode-start anchors spaced by more than 60 market sessions",
+  "primary_predictor": "stock_rebound_trailing20_from_low",
+  "primary_predictor_treatment": "continuous; no optimized rebound cutoff",
+  "primary_outcome": "future_rel_sector_40d",
+  "primary_horizon_sessions": 40,
+  "expected_direction": "negative",
+  "secondary_outcomes": [
+    "future_rel_sector_60d",
+    "future_rel_nifty_40d",
+    "future_stock_40d"
+  ],
+  "comparison_landmarks": [5, 10],
+  "no_reoptimization_rules": [
+    "do not change Day 20 after viewing external-validation returns",
+    "do not replace 40D sector-relative return as the primary outcome",
+    "do not choose a rebound threshold using validation outcomes",
+    "do not alter the episode definition to improve validation results",
+    "report null or opposite results unchanged"
+  ],
+  "recommended_external_validation": "construct a new stock sample from current Nifty 500 members not used in the original 100-stock discovery universe, preserving the original market-cap-stratified and sector-balanced sampling philosophy"
+}
