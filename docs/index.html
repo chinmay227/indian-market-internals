@@ -26,9 +26,7 @@
     <section class="hero shell">
       <div class="eyebrow">Independent quantitative research · Indian equities</div>
       <h1>When does equity weakness actually persist?</h1>
-      <p class="lede">
-        An empirical study of relative weakness, episode construction, rebound dynamics, and backtest bias across a frozen Nifty 500 universe.
-      </p>
+      <p class="lede">An empirical study of relative weakness, episode construction, rebound dynamics, and backtest bias across a frozen Nifty 500 universe.</p>
       <div class="status-row">
         <span class="status success">Cross-sectionally replicated</span>
         <span class="status">Prospective monitoring frozen</span>
@@ -51,76 +49,38 @@
 
     <section class="section shell" id="result">
       <div class="section-head">
-        <div>
-          <div class="eyebrow">The replicated finding</div>
-          <h2>A larger rebound inside persistent weakness is followed by modestly worse sector-relative performance.</h2>
-        </div>
-        <p class="section-copy">
-          Among stocks still weak versus both Nifty and their sector on episode Day 20, a larger already-observed rebound from the trailing-20-session trough is associated with poorer sector-relative performance over the next 40 sessions.
-        </p>
+        <div><div class="eyebrow">The replicated finding</div><h2>A larger rebound inside persistent weakness is followed by modestly worse sector-relative performance.</h2></div>
+        <p class="section-copy">Among stocks still weak versus both Nifty and their sector on episode Day 20, a larger already-observed rebound from the trailing-20-session trough is associated with poorer sector-relative performance over the next 40 sessions.</p>
       </div>
 
       <div class="two-col">
-        <article class="card chart-card">
-          <div class="card-head"><h3>Discovery → validation</h3><span class="pill">effect shrank ~68%</span></div>
-          <div id="discoveryValidation" class="plot"></div>
-          <p class="caption">The sign replicated in 400 previously unused stocks, but the discovery estimate materially overstated the effect size.</p>
-        </article>
-        <article class="card chart-card">
-          <div class="card-head"><h3>Why Day 20 became the candidate</h3><span class="pill neutral">discovery sample only</span></div>
-          <div id="landmarkChart" class="plot"></div>
-          <p class="caption">Day 5 and Day 10 were weak; the stronger Day-20 relationship was then locked before external validation.</p>
-        </article>
+        <article class="card chart-card"><div class="card-head"><h3>Discovery → validation</h3><span class="pill">effect shrank ~68%</span></div><div id="discoveryValidation" class="plot"></div><p class="caption">The sign replicated in 400 previously unused stocks, but the discovery estimate materially overstated the effect size.</p></article>
+        <article class="card chart-card"><div class="card-head"><h3>Why Day 20 became the candidate</h3><span class="pill neutral">discovery sample only</span></div><div id="landmarkChart" class="plot"></div><p class="caption">Day 5 and Day 10 were weak; the stronger Day-20 relationship was then locked before external validation.</p></article>
       </div>
 
       <div class="two-col">
-        <article class="card chart-card">
-          <div class="card-head"><h3>Validation rebound quartiles</h3><span class="pill">descriptive, not a cutoff</span></div>
-          <div id="quartileChart" class="plot"></div>
-          <p class="caption">Median 40D sector-relative performance becomes progressively weaker across rebound quartiles.</p>
-        </article>
-        <article class="card chart-card">
-          <div class="card-head"><h3>Cluster robustness</h3><span class="pill">2,000 bootstrap draws</span></div>
-          <div id="bootstrapChart" class="plot"></div>
-          <p class="caption">All three predeclared clustered 95% intervals remain below zero, although the calendar-quarter upper bound is very close to zero.</p>
-        </article>
+        <article class="card chart-card"><div class="card-head"><h3>Validation rebound quartiles</h3><span class="pill">descriptive, not a cutoff</span></div><div id="quartileChart" class="plot"></div><p class="caption">Median 40D sector-relative performance becomes progressively weaker across rebound quartiles.</p></article>
+        <article class="card chart-card"><div class="card-head"><h3>Cluster robustness</h3><span class="pill">2,000 bootstrap draws</span></div><div id="bootstrapChart" class="plot"></div><p class="caption">All three predeclared clustered 95% intervals remain below zero, although the calendar-quarter upper bound is very close to zero.</p></article>
       </div>
 
-      <div class="callout important">
-        <strong>What this does not mean:</strong> the validated relationship is mainly <em>sector-relative</em>. The 40D Nifty-relative and absolute-stock correlations are close to zero, so this is not evidence that the stock itself will necessarily fall.
-      </div>
-
-      <article class="card chart-card full">
-        <div class="card-head"><h3>Outcome specificity</h3><span class="pill neutral">validation sample</span></div>
-        <div id="outcomeChart" class="plot compact"></div>
-      </article>
+      <div class="callout important"><strong>What this does not mean:</strong> the validated relationship is mainly <em>sector-relative</em>. The 40D Nifty-relative and absolute-stock correlations are close to zero, so this is not evidence that the stock itself will necessarily fall.</div>
+      <article class="card chart-card full"><div class="card-head"><h3>Outcome specificity</h3><span class="pill neutral">validation sample</span></div><div id="outcomeChart" class="plot compact"></div></article>
     </section>
 
     <section class="section alt" id="bias">
       <div class="shell">
         <div class="section-head">
-          <div>
-            <div class="eyebrow">The most important failed result</div>
-            <h2>A strong shorting pattern disappeared when hindsight was removed.</h2>
-          </div>
-          <p class="section-copy">
-            An early experiment selected the maximum rebound inside a future 20-session window and then measured returns after that selected point. That created a mechanically favorable-looking decline.
-          </p>
+          <div><div class="eyebrow">The most important failed result</div><h2>A strong shorting pattern disappeared when hindsight was removed.</h2></div>
+          <p class="section-copy">An early experiment selected the maximum rebound inside a future 20-session window and then measured returns after that selected point. That created a mechanically favorable-looking decline.</p>
         </div>
         <div class="two-col bias-grid">
-          <article class="card chart-card">
-            <div class="card-head"><h3>The hindsight trap</h3><span class="pill warn">rejected analysis</span></div>
-            <div id="biasChart" class="plot"></div>
-            <p class="caption">When the chosen maximum rebound occurred early in the 20-session search window, the next 10D return was mechanically negative. When the selected maximum occurred on Day 20, the apparent decline vanished.</p>
-          </article>
-          <article class="card narrative-card">
-            <div class="step-list">
-              <div class="step"><span>01</span><div><strong>Tempting result</strong><p>Retrospective rebound peaks appeared to be followed by sharp deterioration.</p></div></div>
-              <div class="step"><span>02</span><div><strong>Audit the anchor</strong><p>The “entry” was chosen using future information inside the next 20 sessions.</p></div></div>
-              <div class="step"><span>03</span><div><strong>Reject it</strong><p>The result was treated as selection-induced rather than retained as alpha.</p></div></div>
-              <div class="step"><span>04</span><div><strong>Redesign prospectively</strong><p>Fixed Day 5, 10, and 20 landmarks use only information observable at the anchor.</p></div></div>
-            </div>
-          </article>
+          <article class="card chart-card"><div class="card-head"><h3>The hindsight trap</h3><span class="pill warn">rejected analysis</span></div><div id="biasChart" class="plot"></div><p class="caption">When the chosen maximum rebound occurred early in the 20-session search window, the next 10D return was mechanically negative. When the selected maximum occurred on Day 20, the apparent decline vanished.</p></article>
+          <article class="card narrative-card"><div class="step-list">
+            <div class="step"><span>01</span><div><strong>Tempting result</strong><p>Retrospective rebound peaks appeared to be followed by sharp deterioration.</p></div></div>
+            <div class="step"><span>02</span><div><strong>Audit the anchor</strong><p>The “entry” was chosen using future information inside the next 20 sessions.</p></div></div>
+            <div class="step"><span>03</span><div><strong>Reject it</strong><p>The result was treated as selection-induced rather than retained as alpha.</p></div></div>
+            <div class="step"><span>04</span><div><strong>Redesign prospectively</strong><p>Fixed Day 5, 10, and 20 landmarks use only information observable at the anchor.</p></div></div>
+          </div></article>
         </div>
       </div>
     </section>
@@ -130,42 +90,66 @@
         <div><div class="eyebrow">Episode construction</div><h2>Weak days were compressed into persistent states.</h2></div>
         <p class="section-copy">Consecutive sessions weak versus both Nifty and sector peers are grouped into episodes. This reduces repeated counting of essentially the same state and makes path analysis more interpretable.</p>
       </div>
-      <article class="card chart-card full">
-        <div class="card-head"><h3>Weakness episode duration</h3><span class="pill neutral">9,656 episodes</span></div>
-        <div id="episodeChart" class="plot"></div>
-      </article>
+      <article class="card chart-card full"><div class="card-head"><h3>Weakness episode duration</h3><span class="pill neutral">9,656 episodes</span></div><div id="episodeChart" class="plot"></div></article>
     </section>
 
     <section class="section alt" id="explorer">
       <div class="shell">
-        <div class="section-head">
-          <div><div class="eyebrow">Validation explorer</div><h2>Inspect the 400-stock holdout without changing the locked test.</h2></div>
-          <p class="section-copy">This explorer is descriptive. Filters change what you see on screen; they do not alter the primary validation result or create a new optimized rule.</p>
+        <div class="section-head explorer-head">
+          <div><div class="eyebrow">Validation explorer</div><h2>Does the relationship look the same across sectors?</h2></div>
+          <p class="section-copy">The locked result uses the full 400-stock holdout. This section asks a secondary diagnostic question: is that relationship broad, or concentrated in particular sectors? Sector slices are intentionally descriptive because some contain relatively few observations.</p>
         </div>
-        <div class="filterbar">
-          <label>Sector <select id="sectorFilter"><option value="ALL">All sectors</option></select></label>
+
+        <div class="reader-guide">
+          <article><span class="guide-number">01</span><div><strong>Rank correlation</strong><p><strong>Spearman ρ below zero</strong> means larger Day-20 rebounds tend to rank with worse subsequent sector-relative outcomes. A value near zero means little consistent ordering.</p></div></article>
+          <article><span class="guide-number">02</span><div><strong>Rebound quartiles</strong><p><strong>Q1</strong> contains the smallest rebounds and <strong>Q4</strong> the largest. A clean negative pattern would generally move downward from Q1 toward Q4.</p></div></article>
+          <article><span class="guide-number">03</span><div><strong>Sample size matters</strong><p>The full holdout has 1,386 observations. A single sector can have only a few dozen, so sector-level estimates are noisier and cannot replace the locked test.</p></div></article>
+        </div>
+
+        <div class="filterbar explorer-filter">
+          <label>Choose a sector <select id="sectorFilter"><option value="ALL">All sectors</option></select></label>
           <button id="resetFilters" class="small-btn">Reset</button>
           <span id="filteredCount" class="filter-count"></span>
         </div>
-        <div class="two-col">
+
+        <div class="explorer-summary" id="explorerSummary">
+          <article class="explorer-stat"><span>Selected rank correlation</span><strong id="sectorStatRho">−0.061</strong><small id="sectorStatRhoNote">full holdout</small></article>
+          <article class="explorer-stat"><span>Observations</span><strong id="sectorStatN">1,386</strong><small id="sectorStatNNote">352 stocks</small></article>
+          <article class="explorer-stat"><span>Median future relative return</span><strong id="sectorStatMedian">—</strong><small>next 40 sessions vs sector</small></article>
+        </div>
+
+        <div class="callout interpretation-card" id="sectorInterpretation">
+          <strong>How to read this:</strong> select a sector to compare its descriptive relationship with the full locked holdout.
+        </div>
+
+        <article class="card chart-card full explorer-rho-card">
+          <div class="card-head"><div><h3>Sector heterogeneity</h3><p class="card-subtitle">Each bar is a within-sector Spearman rank correlation. The dashed line marks the full 400-stock validation estimate (ρ = −0.061).</p></div><span class="pill neutral">diagnostic, not a new test</span></div>
+          <div id="sectorRhoChart" class="plot tall"></div>
+          <p class="caption">Large variation across sectors is expected when subgroup sample sizes are smaller. The primary inferential result remains the predeclared full-holdout test.</p>
+        </article>
+
+        <div class="two-col explorer-detail-grid">
           <article class="card chart-card">
-            <div class="card-head"><h3>Sector-level relationship</h3><span class="pill neutral">descriptive decomposition</span></div>
-            <div id="sectorRhoChart" class="plot"></div>
-            <p class="caption">The primary test is the full 400-stock holdout. Sector views help diagnose heterogeneity but cannot replace or rescue the locked result.</p>
-          </article>
-          <article class="card chart-card">
-            <div class="card-head"><h3>Selected sector rebound quartiles</h3><span class="pill neutral">within-sector descriptive view</span></div>
+            <div class="card-head"><div><h3>Rebound quartiles inside the selected sector</h3><p class="card-subtitle">Q1 = smallest observed rebounds; Q4 = largest.</p></div><span class="pill neutral">within-sector view</span></div>
             <div id="sectorQuartileChart" class="plot"></div>
-            <p class="caption">Choose a sector to see its within-sector rebound quartiles. Small groups are intentionally not over-interpreted.</p>
+            <p class="caption" id="sectorQuartileCaption">Choose a sector to inspect whether future sector-relative outcomes show a clean gradient across rebound sizes.</p>
+          </article>
+          <article class="card narrative-card technical-card">
+            <div class="eyebrow small-eyebrow">Technical read</div>
+            <h3 id="sectorTechnicalTitle">Why the sector view is secondary</h3>
+            <p id="sectorTechnicalBody">Sector-specific estimates are post-validation descriptive decompositions. They help diagnose heterogeneity, but they were not individually predeclared confirmatory tests.</p>
+            <div class="definition-list">
+              <div><strong>Rebound</strong><span>Percentage rise from the lowest stock-price level observed in the trailing 20 market sessions ending on episode Day 20.</span></div>
+              <div><strong>40D sector-relative return</strong><span>How the stock performs over the next 40 market sessions relative to its leave-one-out sector-peer benchmark.</span></div>
+              <div><strong>Spearman ρ</strong><span>Rank-based association. It tests ordering rather than assuming a fixed linear effect per 1% of rebound.</span></div>
+            </div>
           </article>
         </div>
       </div>
     </section>
 
     <section class="section shell" id="method">
-      <div class="section-head">
-        <div><div class="eyebrow">Methodology</div><h2>Designed to make weak results disappear when they should.</h2></div>
-      </div>
+      <div class="section-head"><div><div class="eyebrow">Methodology</div><h2>Designed to make weak results disappear when they should.</h2></div></div>
       <div class="method-grid">
         <article class="method-card"><span>01</span><h3>Relative returns</h3><p>Stocks are compared with Nifty 50 and a leave-one-out equal-weight sector peer benchmark.</p></article>
         <article class="method-card"><span>02</span><h3>Continuous weakness features</h3><p>Magnitude, underperformance days, concentration, effective negative days, and evenness are kept separate rather than collapsed prematurely.</p></article>
@@ -174,33 +158,20 @@
         <article class="method-card"><span>05</span><h3>Dependence control</h3><p>Primary episode starts for a stock are spaced by more than 60 market sessions.</p></article>
         <article class="method-card"><span>06</span><h3>Locked holdout</h3><p>The 400-stock complement, primary outcome, and success criteria were frozen before validation returns were inspected.</p></article>
       </div>
-      <div class="callout">
-        <strong>Known limitation:</strong> the historical universe uses current Nifty 500 membership. The study therefore has current-membership / survivorship bias and is not a historical constituent reconstruction.
-      </div>
+      <div class="callout"><strong>Known limitation:</strong> the historical universe uses current Nifty 500 membership. The study therefore has current-membership / survivorship bias and is not a historical constituent reconstruction.</div>
     </section>
 
     <section class="section prospective" id="prospective">
       <div class="shell prospective-inner">
-        <div>
-          <div class="eyebrow">Phase 11</div>
-          <h2>The historical result is frozen. Future evidence now arrives one episode at a time.</h2>
-          <p>Research cutoff: <strong>21 August 2026</strong>. New Day-20 episode anchors after the cutoff will be evaluated using the same continuous rebound predictor and the same next-40-session sector-relative outcome.</p>
-        </div>
-        <div class="monitor-card">
-          <span class="monitor-dot"></span>
-          <div><strong>Prospective monitor</strong><p>Collecting future observations · no historical re-optimization</p></div>
-        </div>
+        <div><div class="eyebrow">Phase 11</div><h2>The historical result is frozen. Future evidence now arrives one episode at a time.</h2><p>Research cutoff: <strong>21 August 2026</strong>. New Day-20 episode anchors after the cutoff will be evaluated using the same continuous rebound predictor and the same next-40-session sector-relative outcome.</p></div>
+        <div class="monitor-card"><span class="monitor-dot"></span><div><strong>Prospective monitor</strong><p>Collecting future observations · no historical re-optimization</p></div></div>
       </div>
     </section>
   </main>
 
   <footer class="footer shell">
     <div><strong>Indian Equity Weakness Monitor</strong><p>Independent quantitative research. Not investment advice.</p></div>
-    <div class="footer-links">
-      <a href="https://github.com/chinmay227/indian-market-internals" target="_blank" rel="noreferrer">Repository</a>
-      <a href="https://github.com/chinmay227/indian-market-internals/blob/main/paper/working_paper.md" target="_blank" rel="noreferrer">Working paper</a>
-      <a href="#top">Back to top ↑</a>
-    </div>
+    <div class="footer-links"><a href="https://github.com/chinmay227/indian-market-internals" target="_blank" rel="noreferrer">Repository</a><a href="https://github.com/chinmay227/indian-market-internals/blob/main/paper/working_paper.md" target="_blank" rel="noreferrer">Working paper</a><a href="#top">Back to top ↑</a></div>
   </footer>
 </body>
 </html>
