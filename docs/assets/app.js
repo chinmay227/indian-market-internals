@@ -6,6 +6,7 @@ const ACCENT = '#174a5c';
 const ACCENT2 = '#568b95';
 const POS = '#176b4d';
 const NEG = '#9b3b3b';
+const PALE = '#b9c7cc';
 
 const baseLayout = (extra={}) => ({
   margin: {l: 58, r: 24, t: 18, b: 48},
@@ -21,6 +22,17 @@ const baseLayout = (extra={}) => ({
 const config = {displayModeBar:false, responsive:true};
 
 function rho(v){ return Number(v).toFixed(3); }
+function pct(v, digits=2){ return `${(Number(v)*100).toFixed(digits)}%`; }
+function pp(v, digits=2){ return `${(Number(v)*100).toFixed(digits)} pp`; }
+
+function describeRho(value){
+  if(value <= -0.15) return 'a relatively pronounced negative rank relationship';
+  if(value <= -0.05) return 'a modest negative rank relationship';
+  if(value < -0.02) return 'a weak negative rank relationship';
+  if(value <= 0.02) return 'essentially no consistent rank relationship';
+  if(value < 0.10) return 'a weak positive rank relationship';
+  return 'a positive rank relationship';
+}
 
 async function init(){
   const data = await fetch(DATA_URL).then(r=>r.json());
@@ -44,34 +56,127 @@ async function init(){
 
   Plotly.newPlot('episodeChart', [{type:'bar', x:data.episode_duration.map(d=>d.bucket), y:data.episode_duration.map(d=>d.episodes), marker:{color:ACCENT}, hovertemplate:'Episode length %{x} sessions<br>%{y:,} episodes<extra></extra>'}], baseLayout({xaxis:{title:'Episode length (market sessions)'}, yaxis:{title:'Episodes',gridcolor:GRID}, margin:{l:70,r:20,t:18,b:55}}), config);
 
-  setupExplorer(data.sector_summary, data.sector_quartiles);
+  setupExplorer(data.sector_summary, data.sector_quartiles, data.meta);
 }
 
-function setupExplorer(summary, quartiles){
+function setupExplorer(summary, quartiles, meta){
   const sector=document.getElementById('sectorFilter');
   summary.forEach(d=>sector.insertAdjacentHTML('beforeend',`<option>${d.sector}</option>`));
 
+  const renderSectorBars=(selected)=>{
+    const ordered=[...summary].sort((a,b)=>a.spearman-b.spearman);
+    const colors=ordered.map(d=>{
+      if(selected!=='ALL' && d.sector===selected) return ACCENT;
+      return d.spearman < 0 ? PALE : '#b8c9bf';
+    });
+
+    Plotly.react('sectorRhoChart', [{
+      type:'bar', orientation:'h',
+      y:ordered.map(d=>d.sector),
+      x:ordered.map(d=>d.spearman),
+      marker:{color:colors},
+      text:ordered.map(d=>rho(d.spearman)),
+      textposition:'outside', cliponaxis:false,
+      customdata:ordered.map(d=>[d.observations,d.unique_stocks,d.median_sector40*100,d.underperf_rate*100]),
+      hovertemplate:'%{y}<br>Within-sector Spearman ρ %{x:.3f}<br>Observations %{customdata[0]} · stocks %{customdata[1]}<br>Median future sector-relative %{customdata[2]:.2f}%<br>Underperformance rate %{customdata[3]:.1f}%<extra></extra>'
+    }], baseLayout({
+      xaxis:{title:'Rank correlation (Spearman ρ)',range:[-0.42,0.36],gridcolor:GRID,zerolinecolor:'#9ca3af'},
+      yaxis:{gridcolor:'rgba(0,0,0,0)',automargin:true},
+      margin:{l:190,r:42,t:24,b:55},
+      shapes:[{type:'line',x0:meta.validation_spearman,x1:meta.validation_spearman,y0:-0.5,y1:ordered.length-0.5,line:{color:ACCENT,dash:'dash',width:2}}],
+      annotations:[{x:meta.validation_spearman,y:ordered.length-0.25,text:'Full holdout ρ = −0.061',showarrow:false,xanchor:'left',yanchor:'bottom',font:{size:11,color:ACCENT},bgcolor:'rgba(255,255,255,.85)'}]
+    }), config);
+  };
+
   const render=()=>{
     const selected=sector.value;
-    const rows = selected==='ALL' ? summary : summary.filter(d=>d.sector===selected);
-    document.getElementById('filteredCount').textContent = selected==='ALL'
-      ? `${rows.length} sectors · full holdout remains primary`
-      : `${rows[0]?.observations || 0} observations · ${rows[0]?.unique_stocks || 0} stocks`;
+    const selectedRow = selected==='ALL' ? null : summary.find(d=>d.sector===selected);
 
-    const ordered=[...rows].sort((a,b)=>a.spearman-b.spearman);
-    Plotly.react('sectorRhoChart', [{type:'bar',orientation:'h',y:ordered.map(d=>d.sector),x:ordered.map(d=>d.spearman),marker:{color:ordered.map(d=>d.spearman<0?ACCENT:POS)},customdata:ordered.map(d=>[d.observations,d.unique_stocks,d.median_sector40*100,d.underperf_rate*100]),hovertemplate:'%{y}<br>Spearman ρ %{x:.3f}<br>n=%{customdata[0]} · stocks=%{customdata[1]}<br>Median future sector-relative %{customdata[2]:.2f}%<br>Underperformance rate %{customdata[3]:.1f}%<extra></extra>'}], baseLayout({xaxis:{title:'Spearman ρ',gridcolor:GRID,zerolinecolor:'#9ca3af'},yaxis:{gridcolor:'rgba(0,0,0,0)',automargin:true},margin:{l:selected==='ALL'?175:140,r:20,t:18,b:52}}), config);
+    document.getElementById('filteredCount').textContent = selected==='ALL'
+      ? `${summary.length} sectors · full holdout remains primary`
+      : `${selectedRow.observations} observations · ${selectedRow.unique_stocks} stocks`;
+
+    renderSectorBars(selected);
+
+    const statRho=document.getElementById('sectorStatRho');
+    const statRhoNote=document.getElementById('sectorStatRhoNote');
+    const statN=document.getElementById('sectorStatN');
+    const statNNote=document.getElementById('sectorStatNNote');
+    const statMedian=document.getElementById('sectorStatMedian');
+    const interpretation=document.getElementById('sectorInterpretation');
+    const technicalTitle=document.getElementById('sectorTechnicalTitle');
+    const technicalBody=document.getElementById('sectorTechnicalBody');
+    const quartileCaption=document.getElementById('sectorQuartileCaption');
+    const quartileBox=document.getElementById('sectorQuartileChart');
 
     if(selected==='ALL'){
-      document.getElementById('sectorQuartileChart').innerHTML='<div style="padding:110px 25px;text-align:center;color:#667085">Choose a sector to inspect within-sector rebound quartiles.</div>';
+      statRho.textContent=rho(meta.validation_spearman);
+      statRhoNote.textContent='locked 400-stock holdout';
+      statN.textContent=meta.validation_observations.toLocaleString();
+      statNNote.textContent=`${meta.validation_unique_stocks} stocks`;
+      statMedian.textContent='—';
+      interpretation.innerHTML='<strong>How to read this:</strong> the dashed line is the locked full-holdout estimate (ρ = −0.061). Bars show how much individual sector estimates vary around it. Variation does not invalidate the primary result; it shows that the effect is not equally strong in every subgroup.';
+      technicalTitle.textContent='Why the sector view is secondary';
+      technicalBody.textContent='The candidate and success rule were locked for the complete 400-stock holdout, not for each sector separately. Sector decompositions are therefore heterogeneity diagnostics rather than confirmatory tests.';
+      Plotly.purge(quartileBox);
+      quartileBox.innerHTML='<div class="plot-placeholder"><strong>Select a sector</strong><span>Then this panel will split that sector’s observations into four rebound groups and show their median next-40-session performance relative to sector peers.</span></div>';
+      quartileCaption.textContent='The full validation quartiles are shown earlier on the page. This panel is intentionally reserved for within-sector diagnostics.';
       return;
     }
+
+    statRho.textContent=rho(selectedRow.spearman);
+    statRhoNote.textContent=describeRho(selectedRow.spearman);
+    statN.textContent=selectedRow.observations.toLocaleString();
+    statNNote.textContent=`${selectedRow.unique_stocks} stocks`;
+    statMedian.textContent=pct(selectedRow.median_sector40);
+
+    const signComparison = selectedRow.spearman < meta.validation_spearman
+      ? 'more negative than the full-holdout estimate'
+      : selectedRow.spearman > 0
+        ? 'opposite in sign to the full-holdout estimate'
+        : 'less negative than the full-holdout estimate';
+    const smallSample = selectedRow.observations < 50
+      ? ` Only ${selectedRow.observations} observations are available, so this subgroup estimate is particularly noisy.`
+      : '';
+
+    interpretation.innerHTML=`<strong>${selected}:</strong> this slice shows ${describeRho(selectedRow.spearman)} (ρ = ${rho(selectedRow.spearman)}), ${signComparison}. The median 40D sector-relative outcome is ${pct(selectedRow.median_sector40)}.${smallSample}`;
+
     const qrows=quartiles.filter(d=>d.sector===selected).sort((a,b)=>a.quartile-b.quartile);
     if(!qrows.length){
-      document.getElementById('sectorQuartileChart').innerHTML='<div style="padding:110px 25px;text-align:center;color:#667085">Not enough observations for a four-quartile view.</div>';
+      Plotly.purge(quartileBox);
+      quartileBox.innerHTML='<div class="plot-placeholder"><strong>Insufficient data</strong><span>There are not enough observations for a four-quartile view.</span></div>';
+      quartileCaption.textContent='No quartile interpretation is shown because the subgroup is too small.';
+      technicalTitle.textContent=`${selected}: technical note`;
+      technicalBody.textContent=`The sector-level rank correlation is ${rho(selectedRow.spearman)} based on ${selectedRow.observations} observations from ${selectedRow.unique_stocks} stocks. This is a post-validation descriptive decomposition, not a separately predeclared test.`;
       return;
     }
-    Plotly.react('sectorQuartileChart', [{type:'bar',x:qrows.map(d=>`Q${d.quartile}`),y:qrows.map(d=>d.median_sector40*100),marker:{color:ACCENT},text:qrows.map(d=>`${(d.median_sector40*100).toFixed(2)}%`),textposition:'outside',cliponaxis:false,customdata:qrows.map(d=>[(d.median_rebound*100).toFixed(2),d.observations,(d.underperf_rate*100).toFixed(1)]),hovertemplate:'%{x}<br>Median rebound %{customdata[0]}%<br>Median future sector-relative %{y:.2f}%<br>Underperformance rate %{customdata[2]}%<br>n=%{customdata[1]}<extra></extra>'}], baseLayout({yaxis:{title:'Median 40D sector-relative return (%)',gridcolor:GRID,zerolinecolor:'#9ca3af'},margin:{l:70,r:20,t:18,b:48}}), config);
+
+    const medians=qrows.map(d=>d.median_sector40);
+    const q4minusq1=medians[3]-medians[0];
+    const monotonicDown=medians.every((v,i)=>i===0 || v<=medians[i-1]);
+    const directionalSteps=medians.slice(1).filter((v,i)=>v<medians[i]).length;
+
+    Plotly.purge(quartileBox);
+    quartileBox.innerHTML='';
+    Plotly.newPlot(quartileBox, [{
+      type:'bar',
+      x:qrows.map(d=>`Q${d.quartile}`),
+      y:qrows.map(d=>d.median_sector40*100),
+      marker:{color:qrows.map((d,i)=>i===3?ACCENT:ACCENT2)},
+      text:qrows.map(d=>`${(d.median_sector40*100).toFixed(2)}%`),
+      textposition:'outside', cliponaxis:false,
+      customdata:qrows.map(d=>[(d.median_rebound*100).toFixed(2),d.observations,(d.underperf_rate*100).toFixed(1)]),
+      hovertemplate:'%{x}<br>Median rebound %{customdata[0]}%<br>Median future sector-relative %{y:.2f}%<br>Underperformance rate %{customdata[2]}%<br>n=%{customdata[1]}<extra></extra>'
+    }], baseLayout({yaxis:{title:'Median next-40-session return vs sector (%)',gridcolor:GRID,zerolinecolor:'#9ca3af'},margin:{l:72,r:20,t:18,b:48}}), config);
+
+    quartileCaption.textContent = monotonicDown
+      ? `This sector shows a clean downward Q1→Q4 ordering. Q4 is ${Math.abs(q4minusq1*100).toFixed(2)} percentage points below Q1, but this remains a descriptive subgroup result.`
+      : `This sector is not monotonic across all four groups (${directionalSteps} of 3 adjacent steps move downward). Q4 − Q1 is ${(q4minusq1*100).toFixed(2)} percentage points; the middle quartiles show why the sector slice should not be over-interpreted.`;
+
+    technicalTitle.textContent=`${selected}: technical read`;
+    technicalBody.textContent=`Within this sector, Spearman ρ = ${rho(selectedRow.spearman)} using ${selectedRow.observations} observations from ${selectedRow.unique_stocks} stocks. The full locked holdout is ρ = ${rho(meta.validation_spearman)} across ${meta.validation_observations.toLocaleString()} observations. Each sector quartile contains only about ${Math.floor(selectedRow.observations/4)} observations, so the quartile shape is a diagnostic of heterogeneity rather than an independent replication claim.`;
   };
+
   sector.addEventListener('change',render);
   document.getElementById('resetFilters').addEventListener('click',()=>{sector.value='ALL';render();});
   render();
