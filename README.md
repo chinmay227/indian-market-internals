@@ -19,7 +19,7 @@ Those questions are deliberately not collapsed into one definition.
 
 ## Research universe
 
-Version 1 uses a frozen 100-stock sample drawn from the current Nifty 500:
+Version 1 began with a frozen 100-stock discovery sample drawn from the current Nifty 500:
 
 - 20 stocks from market-cap ranks 1–100
 - 20 from 101–200
@@ -31,7 +31,7 @@ Version 1 uses a frozen 100-stock sample drawn from the current Nifty 500:
 
 Approximate historical period: **2018-01-02 to 2026-08-21**.
 
-The panel is intentionally unbalanced because some companies listed later.
+For external cross-sectional validation, the project then used **all 400 remaining stocks** from the same frozen Nifty 500 snapshot, with zero overlap with the 100-stock discovery universe.
 
 ### Known limitation
 
@@ -90,24 +90,45 @@ An early episode-path experiment selected the maximum rebound within a future 20
 
 Rather than retain the attractive result, the experiment was redesigned around fixed, prospectively observable landmarks.
 
-### 6. A new candidate relationship emerged in the hindsight-safe experiment
+### 6. A Day-20 candidate emerged in the hindsight-safe experiment
 
 At fixed episode Days 5, 10 and 20, all predictor information is restricted to what was known on that date and every future outcome begins at `t+1`.
 
-In the reduced-overlap sample, the most interesting candidate appears among episodes that remain weak through **Day 20**:
+In the reduced-overlap discovery sample, the most interesting candidate appeared among episodes that remained weak through **Day 20**:
 
-> Larger rebound from the trailing-20-session stock trough is associated with poorer subsequent 40D sector-relative performance.
+> Larger rebound from the trailing-20-session stock trough was associated with poorer subsequent 40D sector-relative performance.
 
-The primary Day-20 relationship is approximately **Spearman rho = -0.188** in the original 100-stock discovery universe.
+Discovery estimate: approximately **Spearman rho = -0.188**.
 
-Internal robustness checks are supportive: the relationship remains negative when any single calendar year is removed and under stock-, calendar-quarter-, and sector-cluster resampling.
+### 7. The candidate replicated on 400 previously unused stocks, but with substantial shrinkage
 
-**This is not yet an independently validated signal.** The candidate was discovered on the same dataset used for the robustness analysis. The next step is a locked external validation on stocks that were not part of the original discovery universe.
+The external specification was frozen in GitHub before validation returns were evaluated.
+
+The complete 400-stock complement produced:
+
+- **1,386** valid primary observations
+- **352** unique validation stocks
+- validation Spearman: **-0.061**
+- ticker-cluster bootstrap 95% interval: approximately **[-0.116, -0.006]**
+- calendar-quarter-cluster interval: approximately **[-0.119, -0.0002]**
+- sector-cluster interval: approximately **[-0.123, -0.014]**
+
+All five predeclared validation conditions passed.
+
+However, the validation effect retained only about one-third of the original discovery correlation magnitude. That shrinkage is reported explicitly.
+
+The descriptive Q4-minus-Q1 median 40D sector-relative spread is about **-1.65 percentage points**, while the sector-underperformance rate is about **6 percentage points higher** in the largest-rebound quartile than the smallest-rebound quartile.
+
+Crucially, the relationship is mainly **sector-relative**. The corresponding validation correlations with 40D Nifty-relative return and 40D absolute stock return are near zero.
+
+So the evidence does **not** justify calling this a naked-short signal.
 
 Detailed evidence is in:
 
 - `reports/phase_9_internal_robustness.md`
 - `reports/phase_9_locked_external_validation_spec.json`
+- `reports/phase_10_external_validation_protocol.md`
+- `reports/phase_10_external_validation_result.md`
 
 ## Why the project includes null and rejected results
 
@@ -137,9 +158,10 @@ The working research sequence is:
 08_build_weakness_episodes_and_paths.ipynb
 09_test_prospective_rebound_landmarks.ipynb
 10_internal_robustness_and_lock_validation.ipynb
+11_external_validate_day20_rebound_candidate.ipynb
 ```
 
-Notebooks 01–05 are currently committed under `notebooks/`. The later research notebooks have been validated in the working Colab workflow; their compact validated findings are being committed separately while the larger notebook artifacts are promoted into the repository through a safe file-upload path rather than risking partial JSON writes.
+Notebooks 01–05 are currently committed under `notebooks/`. Later research notebooks have been validated in the working Colab workflow; their compact validated findings and locked protocols are committed under `reports/` while the larger notebook artifacts are promoted separately through a safe file-upload path.
 
 ## Research progression
 
@@ -166,24 +188,16 @@ Find a Day-20 candidate relationship
         ↓
 Run internal robustness checks
         ↓
-Lock external-validation specification before new data are examined
+Lock external-validation specification
+        ↓
+Replicate the candidate on 400 previously unused stocks
 ```
 
 ## Current status
 
-The project is now at the boundary between **discovery** and **external validation**.
+The Day-20 candidate is now **cross-sectionally replicated**, but it is not future-time validated and has not been converted into a trading rule.
 
-The next phase should not optimize a rebound cutoff or redesign the episode definition. The candidate specification is intentionally locked before evaluating a new stock sample.
-
-Primary external-validation target:
-
-- episode state: still weak vs both Nifty and sector on Day 20
-- predictor: continuous rebound from trailing-20-session stock trough
-- primary outcome: 40D sector-relative return
-- expected direction: negative
-- no optimized rebound threshold
-
-If the relationship fails on the new sample, that failure will be reported unchanged.
+The next research step should avoid further tuning on the 2018–2026 history. A better next phase is to freeze a prospective monitoring specification for genuinely new post-cutoff observations and separately investigate the economic meaning of the sector-relative effect.
 
 ## Tools
 
