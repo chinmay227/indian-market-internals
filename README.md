@@ -4,6 +4,15 @@ A quantitative research project studying how **relative weakness develops, persi
 
 The project is intentionally research-first. It does **not** assume that a weak stock is automatically a good short, and it does not present an unvalidated backtest as a trading strategy.
 
+## Project outputs
+
+- **Research dashboard:** `https://research.cmbtrades.trade` — interactive site source in [`docs/`](docs/)
+- **Working paper:** [Persistent Relative Weakness and Rebound Dynamics in Indian Equities](paper/working_paper.md)
+- **Research figures:** [FIGURES.md](FIGURES.md)
+- **External validation report:** [Phase 10 result](reports/phase_10_external_validation_result.md)
+
+![Discovery versus validation](docs/assets/figures/fig05_discovery_validation.svg)
+
 ## Research question
 
 The central question is:
@@ -90,6 +99,8 @@ An early episode-path experiment selected the maximum rebound within a future 20
 
 Rather than retain the attractive result, the experiment was redesigned around fixed, prospectively observable landmarks.
 
+![Rejected hindsight-biased result](docs/assets/figures/fig03_hindsight_bias.svg)
+
 ### 6. A Day-20 candidate emerged in the hindsight-safe experiment
 
 At fixed episode Days 5, 10 and 20, all predictor information is restricted to what was known on that date and every future outcome begins at `t+1`.
@@ -122,6 +133,8 @@ The descriptive Q4-minus-Q1 median 40D sector-relative spread is about **-1.65 p
 Crucially, the relationship is mainly **sector-relative**. The corresponding validation correlations with 40D Nifty-relative return and 40D absolute stock return are near zero.
 
 So the evidence does **not** justify calling this a naked-short signal.
+
+![Outcome specificity](docs/assets/figures/fig08_outcome_specificity.svg)
 
 Detailed evidence is in:
 
@@ -159,49 +172,26 @@ The working research sequence is:
 09_test_prospective_rebound_landmarks.ipynb
 10_internal_robustness_and_lock_validation.ipynb
 11_external_validate_day20_rebound_candidate.ipynb
+12_prospective_monitor_day20_rebound.ipynb
 ```
 
 Notebooks 01–05 are currently committed under `notebooks/`. Later research notebooks have been validated in the working Colab workflow; their compact validated findings and locked protocols are committed under `reports/` while the larger notebook artifacts are promoted separately through a safe file-upload path.
 
 ## Research progression
 
-```text
-Build research universe
-        ↓
-Construct Nifty- and sector-relative returns
-        ↓
-Measure magnitude, persistence and concentration
-        ↓
-Test forward outcomes
-        ↓
-Find weak / unstable simple predictive relationships
-        ↓
-Identify overlapping-observation problem
-        ↓
-Compress weak stock-dates into episodes
-        ↓
-Discover retrospective rebound-selection bias
-        ↓
-Replace hindsight turning points with fixed Day 5 / 10 / 20 landmarks
-        ↓
-Find a Day-20 candidate relationship
-        ↓
-Run internal robustness checks
-        ↓
-Lock external-validation specification
-        ↓
-Replicate the candidate on 400 previously unused stocks
-```
+![Research progression](docs/assets/figures/fig01_research_pipeline.svg)
 
 ## Current status
 
 The Day-20 candidate is now **cross-sectionally replicated**, but it is not future-time validated and has not been converted into a trading rule.
 
-The next research step should avoid further tuning on the 2018–2026 history. A better next phase is to freeze a prospective monitoring specification for genuinely new post-cutoff observations and separately investigate the economic meaning of the sector-relative effect.
+The historical result is frozen at the **2026-08-21** research cutoff. Phase 11 is designed to accumulate genuinely new post-cutoff Day-20 observations without changing the predictor, landmark, or primary 40D sector-relative outcome.
+
+In parallel, the project is being packaged as a reproducible public research product through the working paper, static figure pack, and dashboard.
 
 ## Tools
 
-Python, pandas, NumPy, SciPy, statsmodels, PyArrow, yfinance, Jupyter / Google Colab.
+Python, pandas, NumPy, SciPy, statsmodels, PyArrow, yfinance, Jupyter / Google Colab, Plotly, GitHub Pages.
 
 ## Project philosophy
 
