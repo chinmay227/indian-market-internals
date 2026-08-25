@@ -12,7 +12,7 @@ const baseLayout = (extra={}) => ({
   margin: {l: 58, r: 24, t: 18, b: 48},
   paper_bgcolor: 'rgba(0,0,0,0)',
   plot_bgcolor: 'rgba(0,0,0,0)',
-  font: {family: 'Inter, ui-sans-serif, system-ui, sans-serif', color: INK, size: 12},
+  font: {family: 'IBM Plex Sans, ui-sans-serif, system-ui, sans-serif', color: INK, size: 12},
   xaxis: {gridcolor: GRID, zerolinecolor: GRID, tickfont:{color:MUTED}},
   yaxis: {gridcolor: GRID, zerolinecolor: GRID, tickfont:{color:MUTED}},
   showlegend: false,
@@ -32,6 +32,46 @@ function describeRho(value){
   if(value <= 0.02) return 'essentially no consistent rank relationship';
   if(value < 0.10) return 'a weak positive rank relationship';
   return 'a positive rank relationship';
+}
+
+function setText(selector, text){
+  const el=document.querySelector(selector);
+  if(el) el.textContent=text;
+}
+
+function applyPublicationVoice(){
+  setText('.hero h1','What does persistent stock weakness actually look like?');
+  setText('.hero .lede','The project began with a simple momentum intuition: a stock that keeps underperforming both the market and its own sector may remain weak. Most of the obvious versions of that idea turned out to be much weaker than expected.');
+  setText('#result .section-head h2','A small relationship held up in the 400-stock holdout.');
+  setText('.plain-setup p','The test is not simply asking whether a stock is down. A weakness episode is defined as consecutive sessions in which the stock is weak relative to both Nifty 50 and its sector. If that episode survives to Day 20, the rebound from the lowest price in the previous 20 sessions is measured. Future performance is then compared with sector peers over the next 40 sessions.');
+  const steps=document.querySelectorAll('.question-step p');
+  if(steps[1]) steps[1].textContent='On Day 20, the rebound is measured as the distance from the lowest stock price in the trailing 20 sessions.';
+  if(steps[2]) steps[2].textContent='The next 40 sessions are compared with sector peers. Negative sector-relative return means the stock lagged its sector.';
+  setText('#chart-holdout .card-subtitle','The candidate was found on 100 stocks. The specification was then frozen and tested on the other 400 stocks from the same Nifty 500 snapshot.');
+  setText('#chart-landmarks .card-subtitle','This chart is discovery only. Fixed Day 5, Day 10, and Day 20 landmarks were tested because each could have been observed in real time.');
+  setText('#chart-quartiles .card-subtitle','The 1,386 validation observations are split into four groups based only on rebound size. Q1 has the smallest rebounds. Q4 has the largest.');
+  setText('#chart-bootstrap .card-subtitle','Rows from the same stock, quarter, or sector are not fully independent. The validation data are therefore resampled in clusters rather than treating every observation as unrelated.');
+  setText('#chart-outcomes .card-subtitle','The same rebound ranking is compared with three future outcomes to distinguish absolute stock direction from Nifty-relative and sector-relative performance.');
+  setText('#bias .section-head h2','A promising result turned out to be created by hindsight.');
+  setText('#bias .section-copy','The original test searched forward for the largest rebound inside a 20-session window and then measured returns after that selected peak. The historical anchor therefore depended on information that would not have been known at the time.');
+  setText('#chart-bias .card-subtitle','Cases are grouped by where the retrospectively selected maximum rebound occurred inside the future 20-session search window.');
+  setText('#episodes .eyebrow','Episode definition');
+  setText('#episodes .section-head h2','Consecutive weak days are grouped into episodes to avoid repeated counting.');
+  setText('#episodes .section-copy','A weakness episode continues while the stock remains weak relative to both Nifty and its sector. Once that condition breaks, the episode ends.');
+  setText('#explorer .section-head h2','Sector results show how much the relationship varies across industries.');
+  setText('#explorer .section-copy','The locked validation result is the full 400-stock holdout. The sector breakdown is secondary. Some sectors have only a few dozen observations, so these estimates are treated as noisy diagnostics rather than separate confirmed results.');
+  setText('.explorer-rho-card .card-subtitle','Each bar is a within-sector Spearman rank correlation. The dotted vertical line is the overall 400-stock holdout result, Spearman ρ = −0.061. It is a reference point, not a cutoff or confidence interval.');
+  const interp=document.getElementById('sectorInterpretation');
+  if(interp) interp.innerHTML='<strong>How to use this:</strong> select a sector to compare its descriptive relationship with the full locked holdout.';
+  setText('#sectorTechnicalTitle','Why the sector view is secondary');
+  setText('#method .section-head h2','The design reduces hindsight and repeated counting.');
+  setText('#method .section-copy','The full notebook trail and working paper are in the repository. This section summarizes the design choices that matter most for interpreting the result.');
+  const methods=document.querySelectorAll('#method .method-card p');
+  if(methods[0]) methods[0].textContent='Each stock is compared with Nifty 50 and with a leave-one-out equal-weight sector peer benchmark.';
+  if(methods[1]) methods[1].textContent='Magnitude, persistence, concentration, and related features remain separate rather than being collapsed into one optimized score at this stage.';
+  if(methods[5]) methods[5].textContent='The Day-20 predictor, 40-session sector-relative outcome, holdout universe, and pass criteria were frozen before the validation result was inspected.';
+  setText('#prospective h2','The historical candidate is now frozen.');
+  setText('#prospective p','The historical research cutoff is 21 August 2026. New Day-20 episode landmarks after that date will be evaluated with the same rebound measure and the same next-40-session sector-relative outcome. No new historical tuning will be used to redefine the candidate while the prospective test is running.');
 }
 
 async function init(){
@@ -82,9 +122,9 @@ function setupExplorer(summary, quartiles, meta){
     }], baseLayout({
       xaxis:{title:'Rank correlation (Spearman ρ)',range:[-0.42,0.36],gridcolor:GRID,zerolinecolor:'#9ca3af'},
       yaxis:{gridcolor:'rgba(0,0,0,0)',automargin:true},
-      margin:{l:190,r:42,t:24,b:55},
+      margin:{l:190,r:42,t:42,b:55},
       shapes:[{type:'line',x0:meta.validation_spearman,x1:meta.validation_spearman,y0:-0.5,y1:ordered.length-0.5,line:{color:ACCENT,dash:'dash',width:2}}],
-      annotations:[{x:meta.validation_spearman,y:ordered.length-0.25,text:'Full holdout ρ = −0.061',showarrow:false,xanchor:'left',yanchor:'bottom',font:{size:11,color:ACCENT},bgcolor:'rgba(255,255,255,.85)'}]
+      annotations:[{x:meta.validation_spearman,y:ordered.length-0.15,text:'Overall 400-stock holdout<br>Spearman ρ = −0.061',showarrow:false,xanchor:'left',yanchor:'bottom',align:'left',font:{size:11,color:ACCENT},bgcolor:'rgba(255,255,255,.9)',borderpad:4}]
     }), config);
   };
 
@@ -115,7 +155,7 @@ function setupExplorer(summary, quartiles, meta){
       statN.textContent=meta.validation_observations.toLocaleString();
       statNNote.textContent=`${meta.validation_unique_stocks} stocks`;
       statMedian.textContent='—';
-      interpretation.innerHTML='<strong>How to read this:</strong> the dashed line is the locked full-holdout estimate (ρ = −0.061). Bars show how much individual sector estimates vary around it. Variation does not invalidate the primary result; it shows that the effect is not equally strong in every subgroup.';
+      interpretation.innerHTML='<strong>How to read this:</strong> the dotted line is the overall 400-stock holdout estimate (ρ = −0.061). Bars show how much individual sector estimates vary around it. The line is a reference point, not a cutoff or confidence interval.';
       technicalTitle.textContent='Why the sector view is secondary';
       technicalBody.textContent='The candidate and success rule were locked for the complete 400-stock holdout, not for each sector separately. Sector decompositions are therefore heterogeneity diagnostics rather than confirmatory tests.';
       Plotly.purge(quartileBox);
@@ -183,5 +223,6 @@ function setupExplorer(summary, quartiles, meta){
 }
 
 document.addEventListener('DOMContentLoaded',()=>{
+  applyPublicationVoice();
   const timer=setInterval(()=>{if(window.Plotly){clearInterval(timer);init().catch(err=>console.error(err));}},25);
 });
