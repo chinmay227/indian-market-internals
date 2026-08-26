@@ -183,6 +183,8 @@ For the primary 10D sector-relative coefficient in each population report:
 
 Bootstrap seed: `20260826` with deterministic population/cluster offsets.
 
+Minimum complete primary sample for either candidate promotion or practical-equivalence classification: **700 events** in that weakness population.
+
 ---
 
 # Testing the participation-irrelevance possibility
@@ -198,6 +200,7 @@ Because both predictor and outcome are percentile-ranked, a coefficient inside t
 For each population classify the primary result into one of three categories:
 
 1. **Directional candidate**
+   - at least **700 complete primary events**;
    - 95% ticker-bootstrap interval excludes zero;
    - 95% quarter-bootstrap interval excludes zero;
    - both bootstrap medians share the coefficient sign;
@@ -205,6 +208,7 @@ For each population classify the primary result into one of three categories:
    - descriptive quartiles are coherent rather than driven by one isolated bin.
 
 2. **Evidence consistent with practical irrelevance**
+   - at least **700 complete primary events**;
    - the **90% ticker-bootstrap interval** is fully inside `[-0.05,+0.05]`;
    - the **90% quarter-bootstrap interval** is fully inside `[-0.05,+0.05]`;
    - the 5D and 20D coefficients are also inside or close to the same practical band and do not show a stable opposite pattern.
