@@ -3,21 +3,21 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="site-version" content="20260902-1">
+    <meta name="site-version" content="20260902-2">
     <meta name="author" content="Chinmay Belgaonkar">
     <meta name="robots" content="index,follow,max-image-preview:large">
-    <meta name="description" content="A completed 36-call pilot testing whether a local language model discounts an identical prediction-market price when its source is manipulated or unspecified.">
+    <meta name="description" content="Two completed controlled experiments test whether a local language model distinguishes prediction-market prices by source provenance and preserves a five-level audited reliability gradient.">
     <link rel="canonical" href="https://research.cmbtrades.trade/research/prediction-markets/">
-    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg?v=20260902-1">
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg?v=20260902-2">
     <meta name="theme-color" content="#f3f3f0">
     <meta property="og:type" content="article">
     <meta property="og:title" content="Price as Evidence | CMB Research">
-    <meta property="og:description" content="The transparent-provenance pilot is complete. One local Qwen configuration separated informative from disclosed manipulated prices across all 12 matched items.">
+    <meta property="og:description" content="A local Qwen configuration separated transparent source endpoints and then tracked all five audited reliability levels exactly across 60 controlled calls.">
     <meta property="og:url" content="https://research.cmbtrades.trade/research/prediction-markets/">
     <meta name="twitter:card" content="summary">
     <title>Price as Evidence: Prediction-Market Provenance and LLM Updating | CMB Research</title>
-    <link rel="stylesheet" href="/assets/site.css?v=20260902-1">
-    <link rel="stylesheet" href="/assets/prediction-markets.css?v=20260902-1">
+    <link rel="stylesheet" href="/assets/site.css?v=20260902-2">
+    <link rel="stylesheet" href="/assets/prediction-markets.css?v=20260902-2">
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -27,7 +27,7 @@
         "dateCreated": "2026-08-07",
         "dateModified": "2026-09-02",
         "url": "https://research.cmbtrades.trade/research/prediction-markets/",
-        "about": ["prediction markets", "large language models", "Bayesian updating", "market manipulation", "source credibility"]
+        "about": ["prediction markets", "large language models", "Bayesian updating", "market manipulation", "source credibility", "source reliability"]
       }
     </script>
   </head>
@@ -55,13 +55,13 @@
             <p>Does a language model change its probability appropriately when an identical prediction-market quote comes from an informative source, an uninformed manipulator, or an unspecified process?</p>
             <div class="hero-meta">
               <span class="tag good">Transparent pilot completed</span>
-              <span class="tag warn">Graded follow-up frozen</span>
+              <span class="tag good">Reliability gradient passed</span>
               <span class="tag">Single-model evidence</span>
             </div>
             <div class="inline-links pp-jump-links">
-              <a href="#result">See the result →</a>
+              <a href="#result">See the endpoint result →</a>
               <a href="#design">Study design →</a>
-              <a href="#next">Next experiment →</a>
+              <a href="#gradient">See the graded result →</a>
             </div>
           </div>
 
@@ -77,8 +77,8 @@
 
       <section class="pp-interpretation">
         <div class="shell pp-interpretation-grid">
-          <div><strong>What the result shows</strong><p>One local Qwen 3.5 9B configuration correctly separated transparent informative and manipulated endpoints when deterministic code handled the arithmetic.</p></div>
-          <div><strong>What it does not show</strong><p>It does not establish that LLMs generally resist manipulation or can identify why a price moved in a real market.</p></div>
+          <div><strong>What the results show</strong><p>One local Qwen 3.5 9B configuration separated transparent informative and manipulated endpoints, then preserved an explicit five-level reliability gradient across all tested contexts.</p></div>
+          <div><strong>What they do not show</strong><p>They do not establish that LLMs can infer source reliability, resist manipulation generally, or identify why a price moved in a real market.</p></div>
         </div>
       </section>
 
@@ -133,50 +133,50 @@
       <section class="page-section" id="evidence">
         <div class="shell">
           <div class="pp-section-head">
-            <div><div class="section-kicker">Evidence audit</div><h2>The endpoint result is reproducible; the broader claim is not established.</h2></div>
-            <p>The completed log supports the transparent-credibility result. The later v0.4 archive adds a frozen graded experiment but contains no model outputs from that experiment.</p>
+            <div><div class="section-kicker">Evidence audit</div><h2>Both controlled results are reproducible; the broader claim is not established.</h2></div>
+            <p>The evidence now includes the 36-call transparent-provenance pilot and the completed 60-call graded reliability experiment, with raw prompts, responses, configuration records, and regenerated analysis.</p>
           </div>
 
           <div class="pp-audit-grid">
             <article class="pp-audit pp-available">
               <h3>Available and verified</h3>
               <ul>
-                <li>36 append-only raw JSONL decisions with exact prompts</li>
-                <li>36 successful parses and zero retries</li>
-                <li>Prompt hashes match the frozen protocol</li>
-                <li>Analysis regenerates from the raw log</li>
-                <li>v0.4 code passes 43 automated tests</li>
-                <li>Frozen 60-case gradient file validates exactly</li>
+                <li>36 transparent-pilot decisions and 60 graded-reliability decisions</li>
+                <li>60/60 gradient calls succeeded with zero retries</li>
+                <li>All five audited levels were reported exactly in every tested context</li>
+                <li>All 12 trajectories were complete, monotonic, and responsive</li>
+                <li>Raw prompts, responses, hashes, and inference configuration are preserved</li>
+                <li>Analysis regenerates from the append-only logs</li>
               </ul>
             </article>
             <article class="pp-audit pp-missing">
               <h3>Not established yet</h3>
               <ul>
-                <li>No executed results for the 60-call credibility gradient</li>
-                <li>No replication across prompt templates or model families</li>
+                <li>No replication across prompt templates, quantizations, or model families</li>
+                <li>No test of whether the model can infer an unknown source reliability</li>
                 <li>No real-market or multi-agent evidence</li>
-                <li>Raw outputs from the original 48-call pilot were not recovered</li>
-                <li>Raw outputs from the 24-call competence diagnostic were not recovered</li>
+                <li>No test yet with persuasive narratives at fixed audited reliability</li>
+                <li>Raw outputs from two earlier exploratory diagnostics were not recovered</li>
               </ul>
             </article>
           </div>
 
           <div class="technical pp-conclusion">
             <strong>Current conclusion</strong>
-            <p>The transparent endpoints passed a manipulation check. The result is useful because it justifies a harder experiment, not because it proves robust manipulation resistance.</p>
+            <p>The transparent endpoints and the explicit reliability gradient both passed. This supports moving to a harder stress test, but it remains evidence of controlled instruction-following and calibration—not proof of real-world manipulation resistance.</p>
           </div>
         </div>
       </section>
 
-      <section class="page-section pp-alt" id="next">
+      <section class="page-section pp-alt" id="gradient">
         <div class="shell">
           <div class="pp-section-head">
-            <div><div class="section-kicker">Next experiment · Protocol frozen</div><h2>The easy endpoint passed. Ambiguity is now the test.</h2></div>
-            <p>The next study varies the audited probability that the quote came from an informative mechanism. It tests whether reported credibility moves smoothly with known source reliability.</p>
+            <div><div class="section-kicker">Completed follow-up · 60 calls</div><h2>The model tracked the full audited reliability gradient exactly.</h2></div>
+            <p>The model reported the supplied probability that the quote came from the informative mechanism. Deterministic code then applied the corresponding likelihood ratio, preventing arithmetic ability from driving the result.</p>
           </div>
 
           <div class="pp-gradient-card">
-            <div class="pp-gradient-labels"><span>Uninformative</span><strong>Audited probability source is informative</strong><span>Informative</span></div>
+            <div class="pp-gradient-labels"><span>Uninformative</span><strong>Audited and median reported reliability</strong><span>Informative</span></div>
             <div class="pp-gradient-line">
               <i style="left:0%"><b>0</b></i>
               <i style="left:25%"><b>0.25</b></i>
@@ -187,14 +187,26 @@
           </div>
 
           <div class="pp-next-grid">
-            <article><strong>60 independent calls</strong><p>Four belief-and-quote contexts × three neutral lexical items × five audited reliability levels.</p></article>
-            <article><strong>Exact calculator benchmark</strong><p>For a 0.80 quote, LR(α) = (0.50 + 0.30α) / (0.50 − 0.30α); a 0.20 quote uses its reciprocal.</p></article>
-            <article><strong>Predeclared pass gate</strong><p>Complete trajectories, endpoint accuracy, monotonicity, calibration, and context independence must all pass.</p></article>
-            <article><strong>Then replicate</strong><p>Only after the gradient is executed should the study expand across prompt variants and model families.</p></article>
+            <article><strong>60/60 successful</strong><p>All 12 five-level trajectories completed with no failures and no format-repair retries.</p></article>
+            <article><strong>Zero calibration error</strong><p>Median reported reliability equaled 0, 0.25, 0.50, 0.75, and 1 exactly; overall correlation was 1.000.</p></article>
+            <article><strong>No context leakage</strong><p>Error remained zero whether the quote confirmed or conflicted with the starting belief.</p></article>
+            <article><strong>Screening gate passed</strong><p><code>GRADIENT_TRACKING_PASS</code>: every predeclared completeness, calibration, monotonicity, and independence gate passed.</p></article>
+          </div>
+
+          <div class="pp-run-grid" aria-label="Completed graded experiment configuration">
+            <div><strong>60/60</strong><span>successful decisions</span></div>
+            <div><strong>0</strong><span>retries</span></div>
+            <div><strong>Qwen 3.5 9B</strong><span>Q4_K_M · LM Studio 0.4.23</span></div>
+            <div><strong>0.0</strong><span>temperature</span></div>
+          </div>
+
+          <div class="technical pp-conclusion">
+            <strong>Interpretation boundary</strong>
+            <p>This is a clean competence result: the model preserved a reliability parameter that the prompt explicitly supplied. It does not show that the model can discover source quality from ambiguous evidence. The next stress test should hold audited reliability fixed while adding non-evidential persuasive or manipulative narratives.</p>
           </div>
 
           <div class="status-ladder pp-status">
-            <span>Idea</span><span>Design</span><span class="current">Endpoint pilot passed</span><span>Gradient frozen</span><span>Model replication</span><span>External validation</span>
+            <span>Idea</span><span>Design</span><span>Endpoint passed</span><span class="current">Gradient passed</span><span>Narrative stress test</span><span>Model replication</span>
           </div>
         </div>
       </section>
