@@ -1,1 +1,210 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Working research by Chinmay Belgaonkar on prediction markets, LLM belief updating, price provenance, manipulation, and Bayesian benchmarks."><link rel="canonical" href="https://research.cmbtrades.trade/research/prediction-markets/"><meta property="og:type" content="article"><meta property="og:title" content="Price Provenance and Belief Updating in Prediction Markets"><meta property="og:description" content="I am testing whether LLM agents treat the same market price differently when its source is informative, noisy, or strategically distorted."><meta property="og:url" content="https://research.cmbtrades.trade/research/prediction-markets/"><meta name="twitter:card" content="summary"><title>Prediction Markets and LLM Belief Updating | CMB Research</title><link rel="stylesheet" href="/assets/site.css"><script type="application/ld+json">{"@context":"https://schema.org","@type":"ScholarlyArticle","headline":"Price Provenance and Belief Updating in Prediction Markets","author":{"@type":"Person","name":"Chinmay Belgaonkar"},"dateModified":"2026-08-25","url":"https://research.cmbtrades.trade/research/prediction-markets/","about":["prediction markets","large language models","Bayesian updating","market manipulation","price provenance"]}</script></head><body><header class="site-header"><div class="shell navbar"><a class="wordmark" href="/"><span>CMB Research</span><small>Chinmay Belgaonkar</small></a><nav class="navlinks"><a href="/research/">Research</a><a href="/equity-research/">Equity Research</a><a href="/failed-ideas/">Failed Ideas</a><a href="/research-log/">Research Log</a><a href="/about/">About</a></nav><a class="nav-cta" href="https://github.com/chinmay227" target="_blank" rel="noreferrer">GitHub ↗</a></div></header><main><section class="page-hero"><div class="shell"><div class="kicker">Prediction markets · AI · Working paper</div><h1>Can an LLM tell when a market price deserves less trust?</h1><p>I am testing whether LLM agents update differently when the same numerical prediction-market price comes from an informative setting versus one where a strategic participant may have distorted it.</p><div class="hero-meta"><span class="tag warn">Experimental design</span><span class="tag">Pilot in progress</span><span class="tag">No empirical claim yet</span></div></div></section><section class="page-section"><div class="article-shell prose"><h2>Why I am interested in this</h2><p>Prediction markets are attractive because a price can summarize dispersed information. But that summary is only useful if the mechanism that produced the price is informative. I want to know whether an LLM reasons about that distinction, or whether it tends to treat “the market price” as authoritative regardless of where the price came from.</p><h2>The core test</h2><p>I can show two agents the same numerical market price while changing what they know about its provenance. If one price comes from informed trading and the other may have been moved by a manipulator, a coherent posterior should not necessarily weight those prices equally.</p><blockquote>The question is not whether the model can copy a market probability. The question is whether it understands when the market probability itself should be discounted.</blockquote><h2>Why I am starting with synthetic events</h2><p>Real prediction markets do not reveal the true information set behind a price move. In a synthetic environment I can control the prior, private signals, signal quality, public price, source credibility, and manipulator information. That gives me a known data-generating process and a Bayesian benchmark to compare the model against.</p><div class="technical"><strong>What this gives me</strong><p>I can vary provenance while holding the observed market price fixed. That makes it possible to ask whether the model responds to the source of the information rather than merely reacting to the number on screen.</p></div><h2>What I plan to measure</h2><p>The main outcome is how much weight the model places on the public price under different source conditions. A model that reacts almost identically to a well-informed price and a strategically distorted price would fail the mechanism test even if some of its final probabilities happen to be accurate.</p><h2>Where the project stands</h2><p>The experimental structure and agent workflow are defined. The real-model pilot is still in progress, so I am not presenting a result yet. I am also keeping the Kalshi and Polymarket cross-venue discrepancy work as a separate research strand rather than mixing two different questions into one paper.</p><div class="status-ladder"><span>Idea</span><span class="current">Experimental design</span><span>Pilot</span><span>Robustness</span><span>External validation</span></div><h2>What would change my mind?</h2><p>If LLM responses do not move systematically with source credibility, or if any apparent effect disappears across models and prompt variants, then the provenance mechanism is not supported. That would still be a useful result.</p></div></section></main><footer class="footer"><div class="shell footer-row"><div>© 2026 Chinmay Belgaonkar · Independent research.</div><div class="footer-nav"><a href="/research/">All research</a><a href="/research-log/">Research Log</a><a href="/methods/">Methods</a><a href="/about/">About</a></div></div></footer></body></html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="site-version" content="20260902-1">
+    <meta name="author" content="Chinmay Belgaonkar">
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <meta name="description" content="A completed 36-call pilot testing whether a local language model discounts an identical prediction-market price when its source is manipulated or unspecified.">
+    <link rel="canonical" href="https://research.cmbtrades.trade/research/prediction-markets/">
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg?v=20260902-1">
+    <meta name="theme-color" content="#f3f3f0">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Price as Evidence | CMB Research">
+    <meta property="og:description" content="The transparent-provenance pilot is complete. One local Qwen configuration separated informative from disclosed manipulated prices across all 12 matched items.">
+    <meta property="og:url" content="https://research.cmbtrades.trade/research/prediction-markets/">
+    <meta name="twitter:card" content="summary">
+    <title>Price as Evidence: Prediction-Market Provenance and LLM Updating | CMB Research</title>
+    <link rel="stylesheet" href="/assets/site.css?v=20260902-1">
+    <link rel="stylesheet" href="/assets/prediction-markets.css?v=20260902-1">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ScholarlyArticle",
+        "headline": "Price as Evidence: Do Large Language Models Appropriately Discount Manipulated Prediction-Market Signals?",
+        "author": {"@type": "Person", "name": "Chinmay Belgaonkar"},
+        "dateCreated": "2026-08-07",
+        "dateModified": "2026-09-02",
+        "url": "https://research.cmbtrades.trade/research/prediction-markets/",
+        "about": ["prediction markets", "large language models", "Bayesian updating", "market manipulation", "source credibility"]
+      }
+    </script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="shell navbar">
+        <a class="wordmark" href="/"><span>CMB Research</span><small>Chinmay Belgaonkar</small></a>
+        <nav class="navlinks">
+          <a href="/research/">Research</a>
+          <a href="/equity-research/">Equity Research</a>
+          <a href="/failed-ideas/">Failed Ideas</a>
+          <a href="/research-log/">Research Log</a>
+          <a href="/about/">About</a>
+        </nav>
+        <a class="nav-cta" href="https://github.com/chinmay227/indian-market-internals" target="_blank" rel="noreferrer">GitHub ↗</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-hero pp-hero">
+        <div class="shell pp-hero-grid">
+          <div>
+            <div class="kicker">Prediction markets · AI · Controlled experiment</div>
+            <h1>The same market price is not the same evidence.</h1>
+            <p>Does a language model change its probability appropriately when an identical prediction-market quote comes from an informative source, an uninformed manipulator, or an unspecified process?</p>
+            <div class="hero-meta">
+              <span class="tag good">Transparent pilot completed</span>
+              <span class="tag warn">Graded follow-up frozen</span>
+              <span class="tag">Single-model evidence</span>
+            </div>
+            <div class="inline-links pp-jump-links">
+              <a href="#result">See the result →</a>
+              <a href="#design">Study design →</a>
+              <a href="#next">Next experiment →</a>
+            </div>
+          </div>
+
+          <aside class="pp-signal-card" aria-label="Identical quote with three provenance conditions">
+            <div class="pp-quote"><span>Observed YES quote</span><strong>0.80</strong></div>
+            <div class="pp-signal pp-informative"><span>Verified informative</span><strong>1.00</strong><small>median weight</small></div>
+            <div class="pp-signal pp-manipulated"><span>Disclosed manipulation</span><strong>0.00</strong><small>median weight</small></div>
+            <div class="pp-signal pp-unspecified"><span>Provenance unspecified</span><strong>0.00</strong><small>median weight</small></div>
+            <p>Same number. Different data-generating process.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="pp-interpretation">
+        <div class="shell pp-interpretation-grid">
+          <div><strong>What the result shows</strong><p>One local Qwen 3.5 9B configuration correctly separated transparent informative and manipulated endpoints when deterministic code handled the arithmetic.</p></div>
+          <div><strong>What it does not show</strong><p>It does not establish that LLMs generally resist manipulation or can identify why a price moved in a real market.</p></div>
+        </div>
+      </section>
+
+      <section class="page-section" id="result">
+        <div class="shell">
+          <div class="pp-section-head">
+            <div><div class="section-kicker">Completed pilot</div><h2>Transparent provenance produced complete separation.</h2></div>
+            <p>The model supplied only a credibility weight from 0 to 1. Deterministic code converted that judgment into a Bayesian update, separating source assessment from arithmetic ability.</p>
+          </div>
+
+          <div class="pp-metric-grid">
+            <article class="pp-metric pp-good"><span>Verified informative</span><strong>1.00</strong><small>median credibility weight</small></article>
+            <article class="pp-metric pp-bad"><span>Disclosed manipulation</span><strong>0.00</strong><small>median credibility weight</small></article>
+            <article class="pp-metric pp-caution"><span>Provenance unspecified</span><strong>0.00</strong><small>median · mean 0.075</small></article>
+            <article class="pp-metric"><span>Matched discrimination</span><strong>12/12</strong><small>weight gap of at least 0.50</small></article>
+          </div>
+
+          <figure class="pp-chart">
+            <figcaption><strong>Credibility assigned to the identical quote</strong><span>Median across 12 matched fictional items</span></figcaption>
+            <div class="pp-axis"><span>0</span><span>0.25</span><span>0.50</span><span>0.75</span><span>1</span></div>
+            <div class="pp-bar-row"><span>Informative</span><div class="pp-track"><i class="pp-fill-good" style="width:100%"></i></div><strong>1.00</strong></div>
+            <div class="pp-bar-row"><span>Manipulated</span><div class="pp-track"><i class="pp-zero-bad"></i></div><strong>0.00</strong></div>
+            <div class="pp-bar-row"><span>Unspecified</span><div class="pp-track"><i class="pp-zero-warn"></i></div><strong>0.00</strong></div>
+            <p>Paired sign test: 12 positive gaps, 0 negative, 0 ties; two-sided <em>p</em> = 0.000488. This measures consistency across fixed prompts, not population-level generality.</p>
+          </figure>
+        </div>
+      </section>
+
+      <section class="page-section pp-alt" id="design">
+        <div class="shell">
+          <div class="pp-section-head">
+            <div><div class="section-kicker">Experimental design</div><h2>Hold the quote fixed. Change only where it came from.</h2></div>
+            <p>Twelve neutral fictional events avoid historical knowledge. Each event appears in three matched source conditions, producing 36 independent, stateless decisions.</p>
+          </div>
+
+          <div class="method-grid">
+            <article class="method-card"><span class="pp-step">01</span><h3>Matched contexts</h3><p>Starting probabilities are 0.40 or 0.60 and displayed YES quotes are 0.20 or 0.80.</p></article>
+            <article class="method-card"><span class="pp-step">02</span><h3>Three provenance labels</h3><p>Verified informative, disclosed uninformed manipulation, and source unspecified.</p></article>
+            <article class="method-card"><span class="pp-step">03</span><h3>Model judges credibility</h3><p>The model returns a weight <em>w</em> between 0 and 1 rather than calculating the revised probability.</p></article>
+            <article class="method-card"><span class="pp-step">04</span><h3>Code performs the update</h3><p class="pp-equation">LR<sub>effective</sub> = LR<sub>benchmark</sub><sup>w</sup></p><p>Weighting occurs on the log-likelihood scale.</p></article>
+          </div>
+
+          <div class="pp-run-grid" aria-label="Completed pilot configuration">
+            <div><strong>36/36</strong><span>successful decisions</span></div>
+            <div><strong>0</strong><span>retries</span></div>
+            <div><strong>Qwen 3.5 9B</strong><span>Q4_K_M · LM Studio</span></div>
+            <div><strong>0.0</strong><span>temperature</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page-section" id="evidence">
+        <div class="shell">
+          <div class="pp-section-head">
+            <div><div class="section-kicker">Evidence audit</div><h2>The endpoint result is reproducible; the broader claim is not established.</h2></div>
+            <p>The completed log supports the transparent-credibility result. The later v0.4 archive adds a frozen graded experiment but contains no model outputs from that experiment.</p>
+          </div>
+
+          <div class="pp-audit-grid">
+            <article class="pp-audit pp-available">
+              <h3>Available and verified</h3>
+              <ul>
+                <li>36 append-only raw JSONL decisions with exact prompts</li>
+                <li>36 successful parses and zero retries</li>
+                <li>Prompt hashes match the frozen protocol</li>
+                <li>Analysis regenerates from the raw log</li>
+                <li>v0.4 code passes 43 automated tests</li>
+                <li>Frozen 60-case gradient file validates exactly</li>
+              </ul>
+            </article>
+            <article class="pp-audit pp-missing">
+              <h3>Not established yet</h3>
+              <ul>
+                <li>No executed results for the 60-call credibility gradient</li>
+                <li>No replication across prompt templates or model families</li>
+                <li>No real-market or multi-agent evidence</li>
+                <li>Raw outputs from the original 48-call pilot were not recovered</li>
+                <li>Raw outputs from the 24-call competence diagnostic were not recovered</li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="technical pp-conclusion">
+            <strong>Current conclusion</strong>
+            <p>The transparent endpoints passed a manipulation check. The result is useful because it justifies a harder experiment, not because it proves robust manipulation resistance.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="page-section pp-alt" id="next">
+        <div class="shell">
+          <div class="pp-section-head">
+            <div><div class="section-kicker">Next experiment · Protocol frozen</div><h2>The easy endpoint passed. Ambiguity is now the test.</h2></div>
+            <p>The next study varies the audited probability that the quote came from an informative mechanism. It tests whether reported credibility moves smoothly with known source reliability.</p>
+          </div>
+
+          <div class="pp-gradient-card">
+            <div class="pp-gradient-labels"><span>Uninformative</span><strong>Audited probability source is informative</strong><span>Informative</span></div>
+            <div class="pp-gradient-line">
+              <i style="left:0%"><b>0</b></i>
+              <i style="left:25%"><b>0.25</b></i>
+              <i style="left:50%"><b>0.50</b></i>
+              <i style="left:75%"><b>0.75</b></i>
+              <i style="left:100%"><b>1</b></i>
+            </div>
+          </div>
+
+          <div class="pp-next-grid">
+            <article><strong>60 independent calls</strong><p>Four belief-and-quote contexts × three neutral lexical items × five audited reliability levels.</p></article>
+            <article><strong>Exact calculator benchmark</strong><p>For a 0.80 quote, LR(α) = (0.50 + 0.30α) / (0.50 − 0.30α); a 0.20 quote uses its reciprocal.</p></article>
+            <article><strong>Predeclared pass gate</strong><p>Complete trajectories, endpoint accuracy, monotonicity, calibration, and context independence must all pass.</p></article>
+            <article><strong>Then replicate</strong><p>Only after the gradient is executed should the study expand across prompt variants and model families.</p></article>
+          </div>
+
+          <div class="status-ladder pp-status">
+            <span>Idea</span><span>Design</span><span class="current">Endpoint pilot passed</span><span>Gradient frozen</span><span>Model replication</span><span>External validation</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="shell footer-row">
+        <div>© 2026 Chinmay Belgaonkar · Independent research · Not investment advice.</div>
+        <div class="footer-nav"><a href="/research/">All research</a><a href="/research-log/">Research Log</a><a href="/methods/">Methods</a><a href="/about/">About</a></div>
+      </div>
+    </footer>
+  </body>
+</html>
